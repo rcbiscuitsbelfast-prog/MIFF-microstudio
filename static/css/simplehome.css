@@ -1,0 +1,174 @@
+/* Simplified Home Page Styles */
+
+.simple-home {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+/* Hide regular home sections */
+.home-section .part:not(.simple-home):not(.simple-footer) {
+  display: none;
+}
+
+.simple-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.simple-subtitle {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 60px 0;
+}
+
+.simple-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.simple-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 40px 30px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.simple-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: hsl(180, 50%, 40%);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.simple-card:active {
+  transform: translateY(-4px);
+}
+
+.simple-card i {
+  font-size: 64px;
+  color: hsl(180, 50%, 60%);
+  margin-bottom: 20px;
+}
+
+.simple-card h3 {
+  font-size: 24px;
+  color: white;
+  margin: 0 0 12px 0;
+  font-weight: bold;
+}
+
+.simple-card p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.simple-footer {
+  padding: 30px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.simple-footer p {
+  margin: 10px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Mobile Optimizations */
+@media screen and (max-width: 768px) {
+  .simple-title {
+    font-size: 36px;
+  }
+
+  .simple-subtitle {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  .simple-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 400px;
+  }
+
+  .simple-card {
+    min-height: 160px;
+    padding: 30px 20px;
+  }
+
+  .simple-card i {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .simple-card h3 {
+    font-size: 20px;
+  }
+
+  .simple-card p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .simple-title {
+    font-size: 28px;
+  }
+
+  .simple-subtitle {
+    font-size: 16px;
+  }
+
+  .simple-card {
+    min-height: 140px;
+    padding: 24px 16px;
+  }
+}
+
+/* Touch optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .simple-card:hover {
+    transform: none;
+  }
+
+  .simple-card:active {
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Guest button highlighting */
+.guest-button-primary {
+  border: 3px solid hsl(180, 50%, 50%) !important;
+  background: hsl(180, 50%, 35%) !important;
+  box-shadow: 0 0 20px rgba(180, 200, 255, 0.3) !important;
+}
+
+.guest-button-primary:hover {
+  background: hsl(180, 50%, 45%) !important;
+  box-shadow: 0 0 30px rgba(180, 200, 255, 0.5) !important;
+}

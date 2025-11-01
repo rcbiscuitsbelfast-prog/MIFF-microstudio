@@ -477,23 +477,23 @@ html(lang=language)
       div#login-window
         form#guest-panel
           h2 #{translator.get("Start creating")}
-          div.button#guest-action-guest
+          div.button.guest-button-primary#guest-action-guest
             i.fas.fa-user-clock
             br
-            h3 #{translator.get("Create as a guest")}
-            p #{translator.get("Start using microStudio without creating an account.")}
+            h3 #{translator.get("Start as Guest")}
+            p #{translator.get("Begin building immediately - no account needed")}
 
           div.button#guest-action-create
             i.fa.fa-user-plus
             br
-            h3 #{translator.get("Create my account")}
-            p #{translator.get("Save your projects, work in teams, publish, vote, comment...")}
+            h3 #{translator.get("Create Account")}
+            p #{translator.get("Save projects, collaborate, and more")}
 
           div.button#guest-action-login
             i.fa.fa-sign-in-alt
             br
             h3 #{translator.get("Login")}
-            p #{translator.get("Log in to your existing account.")}
+            p #{translator.get("Log in to your existing account")}
 
         form#login-panel
           h2 #{translator.get("Registered User")}
