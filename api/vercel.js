@@ -4,10 +4,8 @@ const fs = require("fs");
 
 // Set app_data to workspace root before requiring anything
 const workspaceRoot = path.join(__dirname, "..");
-process.env.APP_DATA = workspaceRoot;
 process.env.VERCEL = "true"; // Signal we're running on Vercel
 
-// Create necessary directories if they don't exist
 // In Vercel, we can only write to /tmp, so use that for writable directories
 const tmpDir = "/tmp";
 const requiredDirs = [
@@ -27,11 +25,9 @@ requiredDirs.forEach(dir => {
 });
 
 // Set app_data to /tmp for writable files in Vercel
-if (process.env.VERCEL) {
-  process.env.APP_DATA = tmpDir;
-  process.env.DATA_DIR = path.join(tmpDir, "microstudio-data");
-  process.env.FILES_DIR = path.join(tmpDir, "microstudio-files");
-}
+// This is where the server will store database and user files
+process.env.APP_DATA = tmpDir;
+console.log("Using /tmp for app_data in Vercel (writable filesystem)");
 
 // In Vercel, /var/task is read-only. Use /tmp for writable files or check existing config
 const configPath = path.join(workspaceRoot, "config.json");
