@@ -2,6 +2,7 @@ services:
   - type: web
     name: miff-microstudio
     env: node
+    rootDir: /
     buildCommand: npm install
     startCommand: npm start
     envVars:

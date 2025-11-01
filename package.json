@@ -2,10 +2,12 @@
   "name": "miff-microstudio",
   "version": "1.0.0",
   "description": "microStudio - Mobile-friendly pixel world creator for kids",
+  "main": "server/app.js",
   "scripts": {
-    "start": "cd server && npm start",
+    "start": "cd server && node app.js",
     "build": "cd server && npm install",
-    "install": "cd server && npm install"
+    "install": "cd server && npm install",
+    "preinstall": "cd server && npm install"
   },
   "engines": {
     "node": ">=16.0.0",
