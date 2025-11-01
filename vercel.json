@@ -1,0 +1,74 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/vercel.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/lib/(.*)",
+      "dest": "/static/lib/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/static/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/static/js/$1"
+    },
+    {
+      "src": "/img/(.*)",
+      "dest": "/static/img/$1"
+    },
+    {
+      "src": "/fonts/(.*)",
+      "dest": "/static/fonts/$1"
+    },
+    {
+      "src": "/lang/(.*)",
+      "dest": "/static/lang/$1"
+    },
+    {
+      "src": "/tutorials/(.*)",
+      "dest": "/static/tutorials/$1"
+    },
+    {
+      "src": "/doc/(.*)",
+      "dest": "/static/doc/$1"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/static/manifest.json"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/static/robots.txt"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/static/sitemap.xml"
+    },
+    {
+      "src": "/sw.js",
+      "dest": "/static/sw.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/vercel.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
