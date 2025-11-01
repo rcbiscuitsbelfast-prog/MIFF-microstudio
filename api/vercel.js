@@ -194,9 +194,25 @@ function initializeServer() {
   return initPromise;
 }
 
+// Simple health check endpoint that doesn't require server initialization
+const healthCheck = (req, res) => {
+  if (req.url === "/health" || req.url === "/api/health") {
+    return res.status(200).json({
+      status: "ok",
+      server: expressApp ? "ready" : "initializing",
+      timestamp: new Date().toISOString()
+    });
+  }
+  return false;
+};
+
 // Export handler for Vercel
 module.exports = async (req, res) => {
   try {
+    // Handle health check early
+    const healthResponse = healthCheck(req, res);
+    if (healthResponse !== false) return;
+    
     // Add CORS headers if needed
     if (!res.headersSent) {
       res.setHeader("Access-Control-Allow-Origin", "*");
