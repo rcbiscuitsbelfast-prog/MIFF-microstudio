@@ -38,7 +38,8 @@ if (!fs.existsSync(configPath)) {
     proxy: true,
     port: process.env.PORT || 8080,
     standalone: false,
-    vercel: true // Special flag for Vercel
+    vercel: true, // Special flag for Vercel
+    app_data: tmpDir // Use /tmp for writable files in Vercel
   };
   
   // Use config_prod.json as base if it exists (it should be in the repo)
@@ -48,6 +49,7 @@ if (!fs.existsSync(configPath)) {
       const prodConfig = JSON.parse(fs.readFileSync(prodConfigPath, "utf8"));
       defaultConfig = Object.assign(defaultConfig, prodConfig);
       defaultConfig.vercel = true; // Ensure Vercel flag is set
+      defaultConfig.app_data = tmpDir; // Override app_data to use /tmp
     } catch (e) {
       console.warn("Could not read config_prod.json:", e.message);
     }
