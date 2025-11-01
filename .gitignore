@@ -1,15 +1,42 @@
-plugins/
-server/.greenlockrc
-server/greenlock.d
-config.json
+# Dependencies
+node_modules/
 server/node_modules/
-server/relay/config.json
-files/
-data/
+
+# Build outputs
+*.js.map
+*.css.map
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
 .DS_Store
-.vs/
-microstudio.wiki/
-ignore/
-logs/
-server/blocked_ips.txt
-server/blocked_ips.bak
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+config.json
+
+# Compiled files (if not committing)
+# Uncomment if you want to ignore compiled JS
+# server/**/*.js
+# static/js/**/*.js
+
+# GitHub Pages
+dist/
+docs/
+
+# Temporary files
+tmp/
+temp/

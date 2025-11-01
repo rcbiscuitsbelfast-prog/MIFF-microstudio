@@ -2,7 +2,10 @@ doctype html
 html(lang=language)
   head
     meta(name="description" content=description)
-    meta(name="viewport" content="width=device-width, user-scalable=no, initial-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes")
+    meta(name="mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black-translucent")
     link(rel="alternate" hreflang="pt" href="https://microstudio.dev/ru/")
     link(rel="alternate" hreflang="pt" href="https://microstudio.dev/pt/")
     link(rel="alternate" hreflang="it" href="https://microstudio.dev/it/")
@@ -14,6 +17,7 @@ html(lang=language)
 
     each css in css_files
       link(rel="stylesheet" type="text/css" href=css)
+    link(rel="stylesheet" type="text/css" href="/css/mobile.css")
 
     link(rel="stylesheet" href="/lib/fontlib/fontawesome/css/all.css")
 
@@ -112,6 +116,32 @@ html(lang=language)
       i.fas.fa-bars.main-menu#main-menu-button
 
       img.logo#logo(src="/img/microstudiologo.svg" alt="microStudio" title="microStudio")
+
+    div.mobile-menu-overlay#mobile-menu-overlay
+      div.mobile-menu-content
+        div.mobile-menu-item#mobile-menu-explore
+          i.fa.fa-search
+          span #{translator.get("Explore")}
+        div.mobile-menu-item#mobile-menu-projects
+          i.fa.fa-code
+          span #{translator.get("Create")}
+        div.mobile-menu-item#mobile-menu-tutorials
+          i.fa.fa-lightbulb
+          span #{translator.get("Tutorials")}
+        div.mobile-menu-item#mobile-menu-help
+          i.fa.fa-book-open
+          span #{translator.get("Documentation")}
+        a(target="_blank" href=language == "fr" ? "/fr/community/" : "/community/")
+          div.mobile-menu-item
+            i.fa.fa-users
+            span #{translator.get("Community")}
+        a(target="_blank" href="https://discord.com/invite/BDMqjxd")
+          div.mobile-menu-item
+            i.fab.fa-discord
+            span Discord
+        div.mobile-menu-item#mobile-menu-about
+          i.fa.fa-info-circle
+          span #{translator.get("About")}
 
       div.titlemenu
         li#menu-explore.selected(title=translator.get("Explore")) <i class="fa fa-search"></i><br /><span>#{translator.get("Explore")}</span>
