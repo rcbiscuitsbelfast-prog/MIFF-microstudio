@@ -1,0 +1,21 @@
+[submodule "assets/2d/gdquest-sprites"]
+	path = assets/2d/gdquest-sprites
+	url = https://github.com/GDQuest/game-sprites
+[submodule "assets/2d/cordon-sprites"]
+	path = assets/2d/cordon-sprites
+	url = https://github.com/Sukkoria/project-cordon-sprites
+[submodule "assets/ui/kenney-ui"]
+	path = assets/ui/kenney-ui
+	url = https://github.com/ereborstudios/kenney-ui-pack
+[submodule "assets/mixed/bunnitech"]
+	path = assets/mixed/bunnitech
+	url = https://github.com/bunnitech/Free-Game-Assets
+[submodule "assets/2d/pixellevel"]
+	path = assets/2d/pixellevel
+	url = https://github.com/rakkarage/PixelLevel
+[submodule "assets/2d/superpowers"]
+	path = assets/2d/superpowers
+	url = https://github.com/sparklinlabs/superpowers-asset-packs
+[submodule "assets/2d/lpc-characters"]
+	path = assets/2d/lpc-characters
+	url = https://github.com/LiberatedPixelCup/Universal-LPC-Spritesheet-Character-Generator

@@ -1,6 +1,7 @@
 SHA256 = require("crypto-js/sha256")
 pug = require "pug"
 fs = require "fs"
+path = require "path"
 ProjectManager = require __dirname+"/session/projectmanager.js"
 Jimp = require "jimp"
 Concatenator = require __dirname+"/concatenator.js"
@@ -28,6 +29,9 @@ class @WebApp
 
     @forum_app = new ForumApp @server,@
     @api = new API @server,@
+
+    AssetModules = require __dirname+"/app/assetmodules.js"
+    @asset_modules = new AssetModules @server
 
     @concatenator = new Concatenator @
     @fonts = new Fonts
@@ -619,6 +623,60 @@ class @WebApp
         else
           console.info "couldn't read file: #{req.path}"
           res.status(404).send("Error 404")
+
+    # Asset module API endpoints
+    @app.get /^\/api\/asset-modules\/list\/?$/,(req,res)=>
+      category = req.query?.category or null
+      res.setHeader("Content-Type", "application/json")
+      data = @asset_modules.getAssetList(category)
+      res.send JSON.stringify(data)
+
+    @app.get /^\/api\/asset-modules\/modules\/?$/,(req,res)=>
+      category = req.query?.category or null
+      res.setHeader("Content-Type", "application/json")
+      if category
+        data = @asset_modules.getModulesByCategory(category)
+      else
+        data = []
+        for module_name, module of @asset_modules.modules
+          data.push
+            name: module_name
+            display_name: @asset_modules.getDisplayName(module_name)
+            assets: module.assets
+            count: module.assets.length
+      res.send JSON.stringify(data)
+
+    @app.get /^\/api\/asset-modules\/scan\/?$/,(req,res)=>
+      res.setHeader("Content-Type", "application/json")
+      @asset_modules.scanAllModules()
+      res.send JSON.stringify({ status: "ok", message: "Scanning complete" })
+
+    # Serve asset module image files
+    @app.get /^\/asset-module\/([^\/]+)\/(.+)$/,(req,res)=>
+      module_name = req.params[0]
+      file_path = req.params[1]
+      
+      module = @asset_modules.modules[module_name]
+      return @return404(req,res) if not module?
+
+      full_file_path = path.join(module.full_path, file_path)
+      
+      fs.readFile full_file_path, "binary", (err, content)=>
+        if err or not content?
+          console.info "couldn't read asset module file: #{req.path}"
+          return @return404(req,res)
+        
+        ext = path.extname(file_path).toLowerCase()
+        content_type = switch ext
+          when ".png" then "image/png"
+          when ".jpg", ".jpeg" then "image/jpeg"
+          when ".gif" then "image/gif"
+          when ".webp" then "image/webp"
+          else "application/octet-stream"
+        
+        res.setHeader("Content-Type", content_type)
+        res.setHeader("Cache-Control", "public, max-age=31536000")
+        res.send content
 
     @app.use (req,res)=>
       @return404(req,res)
