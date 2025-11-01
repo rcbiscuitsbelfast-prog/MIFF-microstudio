@@ -126,8 +126,27 @@ function initializeServer() {
               expressApp = serverInstance.app;
               clearInterval(checkInterval);
               console.log("Server initialized successfully");
-              resolve(expressApp);
+              console.log("Express app ready, routes configured");
+              
+              // Give Express a moment to finish setup
+              setTimeout(() => {
+                resolve(expressApp);
+              }, 500);
               return;
+            } else {
+              // Log progress every 10 attempts (1 second)
+              if (attempts % 10 === 0) {
+                console.log(`Waiting for Express app... (attempt ${attempts}/${maxAttempts})`);
+                console.log("serverInstance:", serverInstance);
+                console.log("serverInstance.app:", serverInstance.app);
+              }
+            }
+          } else {
+            // Log progress every 10 attempts
+            if (attempts % 10 === 0) {
+              console.log(`Waiting for server instance... (attempt ${attempts}/${maxAttempts})`);
+              console.log("appModule:", appModule);
+              console.log("appModule.server:", appModule.server);
             }
           }
           
@@ -140,6 +159,7 @@ function initializeServer() {
             console.error("server:", appModule.server);
             if (appModule.server) {
               console.error("server.app:", appModule.server.app);
+              console.error("server.webapp:", appModule.server.webapp);
             }
             initError = error;
             reject(error);
@@ -228,8 +248,9 @@ module.exports = async (req, res) => {
     }
 
     // Handle the request with Express
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let resolved = false;
+      let responseStarted = false;
       
       const cleanup = () => {
         if (!resolved) {
@@ -238,9 +259,29 @@ module.exports = async (req, res) => {
         }
       };
 
+      // Track if response has started
+      const originalWriteHead = res.writeHead;
+      res.writeHead = function(...args) {
+        responseStarted = true;
+        return originalWriteHead.apply(this, args);
+      };
+      
+      const originalWrite = res.write;
+      res.write = function(...args) {
+        responseStarted = true;
+        return originalWrite.apply(this, args);
+      };
+      
       // Handle response end
-      res.on("finish", cleanup);
-      res.on("close", cleanup);
+      res.on("finish", () => {
+        console.log(`Request finished: ${req.method} ${req.url} - Status: ${res.statusCode}`);
+        cleanup();
+      });
+      
+      res.on("close", () => {
+        console.log(`Request closed: ${req.method} ${req.url}`);
+        cleanup();
+      });
       
       // Handle errors
       req.on("error", (err) => {
@@ -255,7 +296,27 @@ module.exports = async (req, res) => {
       
       // Call Express handler
       try {
-        expressApp(req, res);
+        console.log(`Handling request: ${req.method} ${req.url}`);
+        expressApp(req, res, (err) => {
+          if (err) {
+            console.error("Express next() error:", err);
+            if (!resolved && !res.headersSent) {
+              res.status(500).json({
+                error: "Request handler error",
+                message: err.message
+              });
+            }
+            cleanup();
+          }
+        });
+        
+        // If Express doesn't handle the request, resolve after a short delay
+        setTimeout(() => {
+          if (!responseStarted && !res.headersSent && !resolved) {
+            console.warn(`No response sent for ${req.method} ${req.url} after 2 seconds`);
+          }
+        }, 2000);
+        
       } catch (err) {
         console.error("Express handler error:", err);
         console.error(err.stack);
@@ -270,7 +331,12 @@ module.exports = async (req, res) => {
       }
       
       // Timeout fallback (60 seconds for Vercel Pro, 10 for free)
-      setTimeout(cleanup, 60000);
+      setTimeout(() => {
+        if (!resolved) {
+          console.warn(`Request timeout after 60s: ${req.method} ${req.url}`);
+          cleanup();
+        }
+      }, 60000);
     });
   } catch (error) {
     console.error("Vercel handler error:", error);
