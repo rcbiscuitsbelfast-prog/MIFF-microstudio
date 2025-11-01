@@ -4,6 +4,7 @@ class AppUI
       "code"
       "sprites"
       "maps"
+      "simple-world-builder"
       "assets"
       "sounds"
       "music"

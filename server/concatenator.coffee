@@ -207,6 +207,7 @@ class @Concatenator
       "/css/common.css"
       "/css/mobile.css"
       "/css/assetbrowser.css"
+      "/css/simpleworldbuilder.css"
     ]
 
     @webapp_js = [
@@ -301,6 +302,7 @@ class @Concatenator
       "/js/project/projectsource.js"
       "/js/mobile.js"
       "/js/assetbrowser.js"
+      "/js/simpleworldbuilder.js"
       "/js/project/projectsprite.js"
       "/js/project/projectmap.js"
       "/js/project/projectasset.js"
