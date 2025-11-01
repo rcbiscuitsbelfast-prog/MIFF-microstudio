@@ -297,6 +297,7 @@ class @Concatenator
       "/js/project/project.js"
       "/js/project/projectfolder.js"
       "/js/project/projectsource.js"
+      "/js/mobile.js"
       "/js/project/projectsprite.js"
       "/js/project/projectmap.js"
       "/js/project/projectasset.js"

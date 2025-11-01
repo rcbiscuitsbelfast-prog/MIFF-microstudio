@@ -1,3 +1,13 @@
+/* Touch action optimizations */
+* {
+  touch-action: manipulation;
+}
+
+button, .button, input[type="button"], input[type="submit"], a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+}
+
 .top-section-border {
   border-top: solid 10px hsl(200,30%,30%);
 }
