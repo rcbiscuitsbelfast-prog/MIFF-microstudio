@@ -1,0 +1,20 @@
+{
+  "name": "miff-microstudio",
+  "version": "1.0.0",
+  "description": "microStudio - Mobile-friendly pixel world creator for kids",
+  "scripts": {
+    "start": "cd server && npm start",
+    "build": "cd server && npm install",
+    "install": "cd server && npm install"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rcbiscuitsbelfast-prog/MIFF-microstudio.git"
+  },
+  "author": "",
+  "license": "MIT"
+}
