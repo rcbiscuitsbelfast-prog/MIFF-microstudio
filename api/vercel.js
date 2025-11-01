@@ -8,10 +8,12 @@ process.env.APP_DATA = workspaceRoot;
 process.env.VERCEL = "true"; // Signal we're running on Vercel
 
 // Create necessary directories if they don't exist
+// In Vercel, we can only write to /tmp, so use that for writable directories
+const tmpDir = "/tmp";
 const requiredDirs = [
-  path.join(workspaceRoot, "data"),
-  path.join(workspaceRoot, "files"),
-  path.join(workspaceRoot, "logs")
+  path.join(tmpDir, "microstudio-data"),
+  path.join(tmpDir, "microstudio-files"),
+  path.join(tmpDir, "microstudio-logs")
 ];
 
 requiredDirs.forEach(dir => {
@@ -24,10 +26,18 @@ requiredDirs.forEach(dir => {
   }
 });
 
-// Create config.json if it doesn't exist (for Vercel)
+// Set app_data to /tmp for writable files in Vercel
+if (process.env.VERCEL) {
+  process.env.APP_DATA = tmpDir;
+  process.env.DATA_DIR = path.join(tmpDir, "microstudio-data");
+  process.env.FILES_DIR = path.join(tmpDir, "microstudio-files");
+}
+
+// In Vercel, /var/task is read-only. Use /tmp for writable files or check existing config
 const configPath = path.join(workspaceRoot, "config.json");
 if (!fs.existsSync(configPath)) {
-  const defaultConfig = {
+  // Try to use config_prod.json as template, or use environment variables
+  let defaultConfig = {
     realm: "production",
     proxy: true,
     port: process.env.PORT || 8080,
@@ -35,19 +45,25 @@ if (!fs.existsSync(configPath)) {
     vercel: true // Special flag for Vercel
   };
   
-  // Use config_prod.json as base if it exists
+  // Use config_prod.json as base if it exists (it should be in the repo)
   const prodConfigPath = path.join(workspaceRoot, "config_prod.json");
   if (fs.existsSync(prodConfigPath)) {
     try {
       const prodConfig = JSON.parse(fs.readFileSync(prodConfigPath, "utf8"));
-      Object.assign(defaultConfig, prodConfig);
+      defaultConfig = Object.assign(defaultConfig, prodConfig);
       defaultConfig.vercel = true; // Ensure Vercel flag is set
     } catch (e) {
       console.warn("Could not read config_prod.json:", e.message);
     }
   }
   
-  fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2));
+  // In Vercel, we can't write to /var/task, so use /tmp or in-memory config
+  // Instead of writing config.json, we'll pass config directly to the server
+  // Store config in environment or pass it programmatically
+  process.env.VERCEL_CONFIG = JSON.stringify(defaultConfig);
+  console.log("Using in-memory config for Vercel (read-only filesystem)");
+} else {
+  console.log("Using existing config.json");
 }
 
 // Change to server directory so relative paths work
