@@ -5,6 +5,7 @@ class AppUI
       "sprites"
       "maps"
       "simple-world-builder"
+      "mobile-world-builder"
       "assets"
       "sounds"
       "music"
@@ -430,6 +431,15 @@ class AppUI
         else
           element.style.display = "none"
           menuitem.classList.remove "selected" if menuitem?
+    
+    # Hide old explore/projects sections when on home
+    if section == "home"
+      explore_section = document.getElementById("explore-section")
+      projects_section = document.getElementById("projects-section")
+      if explore_section?
+        explore_section.style.display = "none"
+      if projects_section?
+        projects_section.style.display = "none"
 
     if section == "projects" and not @app.project?
       @hide "projectview"

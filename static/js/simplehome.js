@@ -6,18 +6,37 @@ class SimpleHome {
   }
 
   init() {
+    console.log("SimpleHome initializing...");
+    
     // Begin Building card
     const begin_card = document.getElementById("card-begin-building");
     if (begin_card) {
-      begin_card.addEventListener("click", () => {
+      console.log("Found begin building card");
+      begin_card.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Begin building clicked");
         this.showLoginOverlay();
       });
+      // Also support touch
+      begin_card.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showLoginOverlay();
+      });
+    } else {
+      console.error("card-begin-building not found!");
     }
     
     // Original microStudio site card
     const original_card = document.getElementById("card-original-site");
     if (original_card) {
-      original_card.addEventListener("click", () => {
+      original_card.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open("https://microstudio.dev", "_blank");
+      });
+      original_card.addEventListener("touchend", (e) => {
+        e.preventDefault();
         window.open("https://microstudio.dev", "_blank");
       });
     }
@@ -25,7 +44,12 @@ class SimpleHome {
     // MIFF Repository card
     const miff_card = document.getElementById("card-miff-repo");
     if (miff_card) {
-      miff_card.addEventListener("click", () => {
+      miff_card.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
+      });
+      miff_card.addEventListener("touchend", (e) => {
+        e.preventDefault();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
       });
     }

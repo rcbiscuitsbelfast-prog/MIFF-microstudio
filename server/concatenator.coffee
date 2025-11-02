@@ -208,6 +208,7 @@ class @Concatenator
       "/css/mobile.css"
       "/css/assetbrowser.css"
       "/css/simpleworldbuilder.css"
+      "/css/mobileworldbuilder.css"
       "/css/simplehome.css"
     ]
 
@@ -304,6 +305,7 @@ class @Concatenator
       "/js/mobile.js"
       "/js/assetbrowser.js"
       "/js/simpleworldbuilder.js"
+      "/js/mobileworldbuilder.js"
       "/js/simplehome.js"
       "/js/project/projectsprite.js"
       "/js/project/projectmap.js"
