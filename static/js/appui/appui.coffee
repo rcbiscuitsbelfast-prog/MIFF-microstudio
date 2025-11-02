@@ -441,10 +441,34 @@ class AppUI
       if projects_section?
         projects_section.style.display = "none"
       
-      # Ensure simple home is visible
+      # Ensure simple home is visible and hide ALL old parts
       home_section = document.getElementById("home-section")
       if home_section?
         home_section.classList.add("simple-mode")
+        
+        # Hide all old parts immediately with multiple methods
+        all_parts = home_section.querySelectorAll(".part")
+        for part in all_parts
+          if not part.classList.contains("simple-home") and not part.classList.contains("simple-footer")
+            part.style.display = "none"
+            part.style.visibility = "hidden"
+            part.style.height = "0"
+            part.style.overflow = "hidden"
+            part.style.opacity = "0"
+            part.style.position = "absolute"
+            part.style.left = "-9999px"
+        
+        # Force show simple home and footer
+        simple_home = home_section.querySelector(".simple-home")
+        simple_footer = home_section.querySelector(".simple-footer")
+        if simple_home?
+          simple_home.style.display = "flex"
+          simple_home.style.visibility = "visible"
+          simple_home.style.opacity = "1"
+        if simple_footer?
+          simple_footer.style.display = "block"
+          simple_footer.style.visibility = "visible"
+          simple_footer.style.opacity = "1"
     
     # Show mobile world builder when selected
     if section == "mobile-world-builder"

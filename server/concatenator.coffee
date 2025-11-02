@@ -307,6 +307,7 @@ class @Concatenator
       "/js/simpleworldbuilder.js"
       "/js/mobileworldbuilder.js"
       "/js/simplehome.js"
+      "/js/hideoldhome.js"
       "/js/project/projectsprite.js"
       "/js/project/projectmap.js"
       "/js/project/projectasset.js"
