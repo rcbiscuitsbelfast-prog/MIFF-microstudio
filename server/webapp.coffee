@@ -245,6 +245,14 @@ class @WebApp
 
       res.send @console_funk
         gamelist: @server.content.getConsoleGameList()
+    
+    # Health check endpoint (Phase 7)
+    @app.get /^\/health\/?$/, (req,res)=>
+      res.setHeader "Content-Type", "application/json"
+      res.send JSON.stringify
+        status: "ok"
+        server: "ready"
+        timestamp: Date.now()
 
     # /user/project[/code/]
     @app.get /^\/[^\/\|\?\&\.]+\/[^\/\|\?\&\.]+(\/([^\/\|\?\&\.]+\/?)?)?$/,(req,res)=>

@@ -440,6 +440,18 @@ class AppUI
         explore_section.style.display = "none"
       if projects_section?
         projects_section.style.display = "none"
+      
+      # Ensure simple home is visible
+      home_section = document.getElementById("home-section")
+      if home_section?
+        home_section.classList.add("simple-mode")
+    
+    # Show mobile world builder when selected
+    if section == "mobile-world-builder"
+      # Hide other project sections
+      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music"]
+        elem = document.getElementById("#{s}-section")
+        elem.style.display = "none" if elem?
 
     if section == "projects" and not @app.project?
       @hide "projectview"

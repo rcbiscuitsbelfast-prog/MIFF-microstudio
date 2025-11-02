@@ -720,7 +720,6 @@ class MobileWorldBuilder {
             y: grid_y
           };
         }
-        }
         break;
       case "object":
         if (this.selected_asset && this.selected_asset.type === "sprite") {

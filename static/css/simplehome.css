@@ -158,6 +158,22 @@
   }
 }
 
+/* Ensure cards are clickable and interactive */
+.simple-card {
+  cursor: pointer !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  touch-action: manipulation;
+  position: relative;
+  z-index: 1;
+}
+
+.simple-card * {
+  pointer-events: none; /* Prevent child elements from intercepting clicks */
+}
+
 /* Touch optimizations */
 @media (hover: none) and (pointer: coarse) {
   .simple-card:hover {
@@ -168,6 +184,11 @@
     transform: scale(0.98);
     background: rgba(255, 255, 255, 0.2);
   }
+}
+
+/* Hide old sections completely when in simple mode */
+.home-section.simple-mode .part:not(.simple-home):not(.simple-footer) {
+  display: none !important;
 }
 
 /* Guest button highlighting */
