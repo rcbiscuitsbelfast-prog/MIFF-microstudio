@@ -10,9 +10,18 @@
   margin-top: 60px;
 }
 
-/* Hide regular home sections */
+/* Hide ALL regular home sections except our simple home */
 .home-section .part:not(.simple-home):not(.simple-footer) {
-  display: none;
+  display: none !important;
+}
+
+/* Ensure simple home is visible */
+.simple-home {
+  display: flex !important;
+}
+
+.simple-footer {
+  display: block !important;
 }
 
 .simple-title {
