@@ -3,6 +3,10 @@
   function hideOldHomeSections() {
     const homeSection = document.getElementById("home-section");
     if (homeSection) {
+      // Force home section visible
+      homeSection.style.display = "block";
+      homeSection.style.visibility = "visible";
+      
       // Hide all parts except simple-home and simple-footer
       const allParts = homeSection.querySelectorAll(".part");
       allParts.forEach((part) => {
@@ -14,6 +18,9 @@
           part.style.opacity = "0";
           part.style.position = "absolute";
           part.style.left = "-9999px";
+          part.style.width = "0";
+          part.style.padding = "0";
+          part.style.margin = "0";
         }
       });
       
@@ -24,11 +31,19 @@
         simpleHome.style.display = "flex";
         simpleHome.style.visibility = "visible";
         simpleHome.style.opacity = "1";
+        simpleHome.style.position = "relative";
+        simpleHome.style.height = "auto";
+        simpleHome.style.width = "auto";
+        simpleHome.style.left = "auto";
       }
       if (simpleFooter) {
         simpleFooter.style.display = "block";
         simpleFooter.style.visibility = "visible";
         simpleFooter.style.opacity = "1";
+        simpleFooter.style.position = "relative";
+        simpleFooter.style.height = "auto";
+        simpleFooter.style.width = "auto";
+        simpleFooter.style.left = "auto";
       }
     }
   }

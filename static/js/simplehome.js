@@ -13,9 +13,13 @@ class SimpleHome {
   init() {
     console.log("SimpleHome initializing...");
     
-    // Hide all old parts first
+    // Force home section to be visible
     const homeSection = document.getElementById("home-section");
     if (homeSection) {
+      homeSection.style.display = "block";
+      homeSection.style.visibility = "visible";
+      
+      // Hide all old parts first
       const allParts = homeSection.querySelectorAll(".part");
       allParts.forEach((part) => {
         if (!part.classList.contains("simple-home") && !part.classList.contains("simple-footer")) {
@@ -23,40 +27,67 @@ class SimpleHome {
           part.style.visibility = "hidden";
           part.style.height = "0";
           part.style.overflow = "hidden";
+          part.style.opacity = "0";
+          part.style.position = "absolute";
+          part.style.left = "-9999px";
+        } else if (part.classList.contains("simple-home")) {
+          part.style.display = "flex";
+          part.style.visibility = "visible";
+        } else if (part.classList.contains("simple-footer")) {
+          part.style.display = "block";
+          part.style.visibility = "visible";
         }
       });
     }
     
+    // Wait a bit for DOM to settle, then attach handlers
+    setTimeout(() => {
+      this.attachCardHandlers();
+    }, 100);
+    
+    // Also attach after a longer delay
+    setTimeout(() => {
+      this.attachCardHandlers();
+    }, 500);
+  }
+  
+  attachCardHandlers() {
     // Begin Building card
     const begin_card = document.getElementById("card-begin-building");
     if (begin_card) {
-      console.log("Found begin building card");
+      console.log("Found begin building card, attaching handlers");
       
-      // Remove any existing listeners
+      // Remove old listeners by cloning
       const newBeginCard = begin_card.cloneNode(true);
       begin_card.parentNode.replaceChild(newBeginCard, begin_card);
       
-      // Add handlers to new element
-      newBeginCard.addEventListener("click", (e) => {
+      // Direct click handler - no capture to allow bubbling test
+      const clickHandler = (e) => {
+        console.log("BEGIN BUILDING CLICKED!", e);
         e.preventDefault();
         e.stopPropagation();
-        console.log("Begin building clicked");
         this.showLoginOverlay();
-      }, {capture: true});
+        return false;
+      };
       
+      newBeginCard.onclick = clickHandler;
+      newBeginCard.addEventListener("click", clickHandler);
       newBeginCard.addEventListener("touchend", (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log("Begin building touched");
+        console.log("BEGIN BUILDING TOUCHED!");
         this.showLoginOverlay();
-      }, {capture: true});
+      });
       
-      // Force pointer events
+      // Force styles
       newBeginCard.style.pointerEvents = "auto";
       newBeginCard.style.cursor = "pointer";
-      newBeginCard.style.zIndex = "1000";
+      newBeginCard.style.zIndex = "10001";
+      newBeginCard.style.position = "relative";
+      
+      console.log("Begin card handler attached");
     } else {
-      console.error("card-begin-building not found!");
+      console.warn("card-begin-building not found!");
     }
     
     // Original microStudio site card
@@ -65,21 +96,26 @@ class SimpleHome {
       const newOriginalCard = original_card.cloneNode(true);
       original_card.parentNode.replaceChild(newOriginalCard, original_card);
       
-      newOriginalCard.addEventListener("click", (e) => {
+      const clickHandler = (e) => {
+        console.log("ORIGINAL SITE CLICKED!", e);
         e.preventDefault();
         e.stopPropagation();
         window.open("https://microstudio.dev", "_blank");
-      }, {capture: true});
+        return false;
+      };
       
+      newOriginalCard.onclick = clickHandler;
+      newOriginalCard.addEventListener("click", clickHandler);
       newOriginalCard.addEventListener("touchend", (e) => {
         e.preventDefault();
         e.stopPropagation();
         window.open("https://microstudio.dev", "_blank");
-      }, {capture: true});
+      });
       
       newOriginalCard.style.pointerEvents = "auto";
       newOriginalCard.style.cursor = "pointer";
-      newOriginalCard.style.zIndex = "1000";
+      newOriginalCard.style.zIndex = "10001";
+      newOriginalCard.style.position = "relative";
     }
     
     // MIFF Repository card
@@ -88,21 +124,26 @@ class SimpleHome {
       const newMiffCard = miff_card.cloneNode(true);
       miff_card.parentNode.replaceChild(newMiffCard, miff_card);
       
-      newMiffCard.addEventListener("click", (e) => {
+      const clickHandler = (e) => {
+        console.log("MIFF REPO CLICKED!", e);
         e.preventDefault();
         e.stopPropagation();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
-      }, {capture: true});
+        return false;
+      };
       
+      newMiffCard.onclick = clickHandler;
+      newMiffCard.addEventListener("click", clickHandler);
       newMiffCard.addEventListener("touchend", (e) => {
         e.preventDefault();
         e.stopPropagation();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
-      }, {capture: true});
+      });
       
       newMiffCard.style.pointerEvents = "auto";
       newMiffCard.style.cursor = "pointer";
-      newMiffCard.style.zIndex = "1000";
+      newMiffCard.style.zIndex = "10001";
+      newMiffCard.style.position = "relative";
     }
   }
 

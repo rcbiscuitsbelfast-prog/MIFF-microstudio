@@ -1,35 +1,72 @@
 /* Simplified Home Page Styles */
 
+/* OVERRIDE: Make sure home-section is visible */
+#home-section {
+  display: block !important;
+  visibility: visible !important;
+}
+
 .simple-home {
   min-height: calc(100vh - 60px);
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 40px 20px !important;
   text-align: center;
   margin-top: 60px;
+  background: linear-gradient(135deg, hsl(200,50%,30%), hsl(10,50%,30%) 120%) !important;
+  color: #FFF !important;
+  position: relative !important;
+  z-index: 1000 !important;
 }
 
 /* Hide ALL regular home sections except our simple home */
 .home-section .part {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
 }
 
 /* Only show simple-home and simple-footer */
 .home-section .part.simple-home {
   display: flex !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+  padding: 160px 0 100px 0 !important;
+  opacity: 1 !important;
+  position: relative !important;
+  left: auto !important;
 }
 
 .home-section .part.simple-footer {
   display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  left: auto !important;
 }
 
-/* Hide all other parts completely */
+/* Hide all other parts completely - be very aggressive */
 .home-section .part:not(.simple-home):not(.simple-footer) {
   display: none !important;
   visibility: hidden !important;
   height: 0 !important;
   overflow: hidden !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  width: 0 !important;
 }
 
 .simple-title {
@@ -166,7 +203,14 @@
   }
 }
 
-/* Ensure cards are clickable and interactive */
+/* Make sure cards container is above everything */
+.simple-cards {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure cards are clickable and interactive - override everything */
 .simple-card {
   cursor: pointer !important;
   user-select: none !important;
@@ -175,19 +219,39 @@
   -ms-user-select: none !important;
   touch-action: manipulation !important;
   position: relative !important;
-  z-index: 1000 !important;
+  z-index: 10001 !important;
   pointer-events: auto !important;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3) !important;
+  /* Override any conflicting styles */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  /* Make sure it's clickable */
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .simple-card * {
   pointer-events: none !important; /* Prevent child elements from intercepting clicks */
+  user-select: none !important;
 }
 
-/* Make sure cards are above everything */
-.simple-cards {
-  position: relative;
-  z-index: 1000;
+/* Override .center div that might be interfering */
+.simple-home .center {
+  pointer-events: auto !important;
+  z-index: 10000 !important;
+  position: relative !important;
+}
+
+.simple-home .center * {
+  pointer-events: none !important;
+}
+
+.simple-home .center .simple-cards {
+  pointer-events: auto !important;
 }
 
 /* Touch optimizations */
