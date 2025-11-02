@@ -209,6 +209,7 @@ class @Concatenator
       "/css/assetbrowser.css"
       "/css/simpleworldbuilder.css"
       "/css/mobileworldbuilder.css"
+      "/css/home.css"
       "/css/simplehome.css"
     ]
 
