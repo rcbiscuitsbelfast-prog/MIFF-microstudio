@@ -4,6 +4,12 @@
 #home-section {
   display: block !important;
   visibility: visible !important;
+  overflow: visible !important;
+}
+
+/* Remove all old home styles */
+#home-section .part:not(.simple-home):not(.simple-footer) {
+  display: none !important;
 }
 
 .simple-home {
