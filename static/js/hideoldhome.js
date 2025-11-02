@@ -33,14 +33,38 @@
     }
   }
   
-  // Run immediately if DOM ready
+  // Run immediately - use inline script execution
+  hideOldHomeSections();
+  
+  // Run when DOM ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", hideOldHomeSections);
   } else {
-    hideOldHomeSections();
+    setTimeout(hideOldHomeSections, 0);
   }
   
-  // Also run after a short delay to catch any late-rendering
-  setTimeout(hideOldHomeSections, 100);
+  // Also run after delays to catch any late-rendering
+  setTimeout(hideOldHomeSections, 50);
+  setTimeout(hideOldHomeSections, 200);
   setTimeout(hideOldHomeSections, 500);
+  setTimeout(hideOldHomeSections, 1000);
+  
+  // Monitor for any parts that appear later
+  const observer = new MutationObserver(() => {
+    hideOldHomeSections();
+  });
+  
+  if (document.body) {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    });
+  }
 })();
