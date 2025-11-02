@@ -52,98 +52,49 @@ class SimpleHome {
   }
   
   attachCardHandlers() {
-    // Begin Building card
+    // Begin Building card - use onclick directly (most reliable)
     const begin_card = document.getElementById("card-begin-building");
     if (begin_card) {
-      console.log("Found begin building card, attaching handlers");
-      
-      // Remove old listeners by cloning
-      const newBeginCard = begin_card.cloneNode(true);
-      begin_card.parentNode.replaceChild(newBeginCard, begin_card);
-      
-      // Direct click handler - no capture to allow bubbling test
-      const clickHandler = (e) => {
-        console.log("BEGIN BUILDING CLICKED!", e);
-        e.preventDefault();
-        e.stopPropagation();
+      begin_card.onclick = () => {
         this.showLoginOverlay();
         return false;
       };
-      
-      newBeginCard.onclick = clickHandler;
-      newBeginCard.addEventListener("click", clickHandler);
-      newBeginCard.addEventListener("touchend", (e) => {
+      begin_card.ontouchend = (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        console.log("BEGIN BUILDING TOUCHED!");
         this.showLoginOverlay();
-      });
-      
-      // Force styles
-      newBeginCard.style.pointerEvents = "auto";
-      newBeginCard.style.cursor = "pointer";
-      newBeginCard.style.zIndex = "10001";
-      newBeginCard.style.position = "relative";
-      
-      console.log("Begin card handler attached");
-    } else {
-      console.warn("card-begin-building not found!");
+      };
+      begin_card.style.pointerEvents = "auto";
+      begin_card.style.cursor = "pointer";
     }
     
     // Original microStudio site card
     const original_card = document.getElementById("card-original-site");
     if (original_card) {
-      const newOriginalCard = original_card.cloneNode(true);
-      original_card.parentNode.replaceChild(newOriginalCard, original_card);
-      
-      const clickHandler = (e) => {
-        console.log("ORIGINAL SITE CLICKED!", e);
-        e.preventDefault();
-        e.stopPropagation();
+      original_card.onclick = () => {
         window.open("https://microstudio.dev", "_blank");
         return false;
       };
-      
-      newOriginalCard.onclick = clickHandler;
-      newOriginalCard.addEventListener("click", clickHandler);
-      newOriginalCard.addEventListener("touchend", (e) => {
+      original_card.ontouchend = (e) => {
         e.preventDefault();
-        e.stopPropagation();
         window.open("https://microstudio.dev", "_blank");
-      });
-      
-      newOriginalCard.style.pointerEvents = "auto";
-      newOriginalCard.style.cursor = "pointer";
-      newOriginalCard.style.zIndex = "10001";
-      newOriginalCard.style.position = "relative";
+      };
+      original_card.style.pointerEvents = "auto";
+      original_card.style.cursor = "pointer";
     }
     
     // MIFF Repository card
     const miff_card = document.getElementById("card-miff-repo");
     if (miff_card) {
-      const newMiffCard = miff_card.cloneNode(true);
-      miff_card.parentNode.replaceChild(newMiffCard, miff_card);
-      
-      const clickHandler = (e) => {
-        console.log("MIFF REPO CLICKED!", e);
-        e.preventDefault();
-        e.stopPropagation();
+      miff_card.onclick = () => {
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
         return false;
       };
-      
-      newMiffCard.onclick = clickHandler;
-      newMiffCard.addEventListener("click", clickHandler);
-      newMiffCard.addEventListener("touchend", (e) => {
+      miff_card.ontouchend = (e) => {
         e.preventDefault();
-        e.stopPropagation();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
-      });
-      
-      newMiffCard.style.pointerEvents = "auto";
-      newMiffCard.style.cursor = "pointer";
-      newMiffCard.style.zIndex = "10001";
-      newMiffCard.style.position = "relative";
+      };
+      miff_card.style.pointerEvents = "auto";
+      miff_card.style.cursor = "pointer";
     }
   }
 
