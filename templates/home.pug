@@ -211,17 +211,17 @@ html(lang=language)
             p.simple-subtitle Simple pixel world builder for kids
             
             div.simple-cards
-              div.simple-card#card-begin-building
+              div.simple-card#card-begin-building(onclick="if(window.simple_home){window.simple_home.showLoginOverlay();}else{const overlay=document.getElementById('login-overlay');const panel=document.getElementById('guest-panel');if(overlay)overlay.style.display='flex';if(panel)panel.style.display='block';}" ontouchend="event.preventDefault();if(window.simple_home){window.simple_home.showLoginOverlay();}else{const overlay=document.getElementById('login-overlay');const panel=document.getElementById('guest-panel');if(overlay)overlay.style.display='flex';if(panel)panel.style.display='block';}")
                 i.fa.fa-pencil-alt
                 h3 Begin Building
                 p Start creating your pixel world
               
-              div.simple-card#card-original-site
+              div.simple-card#card-original-site(onclick="window.open('https://microstudio.dev','_blank');return false;" ontouchend="event.preventDefault();window.open('https://microstudio.dev','_blank');")
                 i.fa.fa-external-link-alt
                 h3 Original microStudio
                 p Visit the original microStudio site
               
-              div.simple-card#card-miff-repo
+              div.simple-card#card-miff-repo(onclick="window.open('https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free','_blank');return false;" ontouchend="event.preventDefault();window.open('https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free','_blank');")
                 i.fab.fa-github
                 h3 MIFF Repository
                 p Check out the MIFF project

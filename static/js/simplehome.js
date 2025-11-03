@@ -40,61 +40,121 @@ class SimpleHome {
       });
     }
     
-    // Wait a bit for DOM to settle, then attach handlers
-    setTimeout(() => {
-      this.attachCardHandlers();
-    }, 100);
-    
-    // Also attach after a longer delay
-    setTimeout(() => {
-      this.attachCardHandlers();
-    }, 500);
+    // Attach handlers immediately and also after delays
+    this.attachCardHandlers();
+    setTimeout(() => this.attachCardHandlers(), 100);
+    setTimeout(() => this.attachCardHandlers(), 500);
+    setTimeout(() => this.attachCardHandlers(), 1000);
   }
   
   attachCardHandlers() {
-    // Begin Building card - use onclick directly (most reliable)
+    // Begin Building card - use multiple methods
     const begin_card = document.getElementById("card-begin-building");
     if (begin_card) {
-      begin_card.onclick = () => {
+      // Remove any existing handlers by cloning
+      const newCard = begin_card.cloneNode(true);
+      begin_card.parentNode.replaceChild(newCard, begin_card);
+      
+      // Set onclick directly (most reliable)
+      newCard.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         this.showLoginOverlay();
         return false;
       };
-      begin_card.ontouchend = (e) => {
+      
+      // Touch handler
+      newCard.ontouchend = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         this.showLoginOverlay();
       };
-      begin_card.style.pointerEvents = "auto";
-      begin_card.style.cursor = "pointer";
+      
+      // Also addEventListener as backup
+      newCard.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showLoginOverlay();
+      });
+      
+      newCard.addEventListener("touchend", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showLoginOverlay();
+      });
+      
+      // Force styles
+      newCard.style.pointerEvents = "auto";
+      newCard.style.cursor = "pointer";
+      newCard.style.zIndex = "10001";
+      
+      // Make it accessible
+      newCard.setAttribute("role", "button");
+      newCard.setAttribute("tabindex", "0");
+      newCard.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          this.showLoginOverlay();
+        }
+      });
     }
     
     // Original microStudio site card
     const original_card = document.getElementById("card-original-site");
     if (original_card) {
-      original_card.onclick = () => {
+      const newCard = original_card.cloneNode(true);
+      original_card.parentNode.replaceChild(newCard, original_card);
+      
+      newCard.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         window.open("https://microstudio.dev", "_blank");
         return false;
       };
-      original_card.ontouchend = (e) => {
+      
+      newCard.ontouchend = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         window.open("https://microstudio.dev", "_blank");
       };
-      original_card.style.pointerEvents = "auto";
-      original_card.style.cursor = "pointer";
+      
+      newCard.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open("https://microstudio.dev", "_blank");
+      });
+      
+      newCard.style.pointerEvents = "auto";
+      newCard.style.cursor = "pointer";
+      newCard.style.zIndex = "10001";
     }
     
     // MIFF Repository card
     const miff_card = document.getElementById("card-miff-repo");
     if (miff_card) {
-      miff_card.onclick = () => {
+      const newCard = miff_card.cloneNode(true);
+      miff_card.parentNode.replaceChild(newCard, miff_card);
+      
+      newCard.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
         return false;
       };
-      miff_card.ontouchend = (e) => {
+      
+      newCard.ontouchend = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
       };
-      miff_card.style.pointerEvents = "auto";
-      miff_card.style.cursor = "pointer";
+      
+      newCard.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open("https://github.com/rcbiscuitsbelfast-prog/MIFF-Make-It-For-Free", "_blank");
+      });
+      
+      newCard.style.pointerEvents = "auto";
+      newCard.style.cursor = "pointer";
+      newCard.style.zIndex = "10001";
     }
   }
 
