@@ -134,11 +134,15 @@
 }
 
 .home-section div.part.part1 {
-  position: relative ;
-  padding: 160px 0 100px 0 ;
-  background: linear-gradient(135deg, hsl(200,50%,30%), hsl(10,50%,30%) 120%);
-  color: #FFF ;
-  padding-top: 160px ;
+  position: relative !important;
+  padding: 20px !important;
+  margin: 0 !important;
+  background: hsl(200, 30%, 15%) !important;
+  color: #FFF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
 }
 .home-section div.part.part1 .right {
   width: auto ;
@@ -181,11 +185,13 @@
   vertical-align: top;
 }
 .home-section div.center {
-  display: inline-block ;
-  text-align: center ;
-  width: 400px ;
-  padding: 20px 40px ;
-  vertical-align: middle;
+  display: block !important;
+  text-align: center !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  vertical-align: top !important;
 }
 
 .container h2 {
