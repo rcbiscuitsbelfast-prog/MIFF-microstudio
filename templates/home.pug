@@ -211,7 +211,7 @@ html(lang=language)
             p.simple-subtitle Simple pixel world builder for kids
             
             div.simple-cards
-              a.simple-card#card-begin-building(href="javascript:void(0)" onclick="const overlay=document.getElementById('login-overlay');const panel=document.getElementById('guest-panel');if(overlay)overlay.style.display='flex';if(panel)panel.style.display='block';return false;" ontouchend="event.preventDefault();const overlay=document.getElementById('login-overlay');const panel=document.getElementById('guest-panel');if(overlay)overlay.style.display='flex';if(panel)panel.style.display='block';")
+              a.simple-card#card-begin-building(href="javascript:void(0)" onclick="const appui=window.app&&window.app.appui;if(appui){appui.setMainSection('mobile-world-builder',true);}else{const section=document.getElementById('mobile-world-builder-section');if(section){section.style.display='block';const home=document.getElementById('home-section');if(home)home.style.display='none';}}return false;" ontouchend="event.preventDefault();const appui=window.app&&window.app.appui;if(appui){appui.setMainSection('mobile-world-builder',true);}else{const section=document.getElementById('mobile-world-builder-section');if(section){section.style.display='block';const home=document.getElementById('home-section');if(home)home.style.display='none';}}")
                 i.fa.fa-pencil-alt
                 h3 Begin Building
                 p Start creating your pixel world

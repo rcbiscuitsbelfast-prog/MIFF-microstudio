@@ -400,6 +400,27 @@ class AppUI
     @show "guest-panel"
 
   setMainSection:(section,useraction=false)->
+    # Mobile world builder doesn't require login
+    if section == "mobile-world-builder"
+      # Allow access without login
+      for s in @menuoptions
+        do (s)=>
+          element = document.getElementById("#{s}-section")
+          menuitem = document.getElementById("menu-#{s}")
+          if s == section
+            element.style.display = "block"
+            menuitem.classList.add "selected" if menuitem?
+          else
+            element.style.display = "none"
+            menuitem.classList.remove "selected" if menuitem?
+      
+      # Hide other project sections
+      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music"]
+        elem = document.getElementById("#{s}-section")
+        elem.style.display = "none" if elem?
+      
+      return
+    
     if section == "projects" and not @app.user?
       @accountRequired()
       return
@@ -472,10 +493,19 @@ class AppUI
     
     # Show mobile world builder when selected
     if section == "mobile-world-builder"
-      # Hide other project sections
-      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music"]
+      # Hide other project sections and home
+      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music", "home"]
         elem = document.getElementById("#{s}-section")
         elem.style.display = "none" if elem?
+      
+      # Show mobile world builder
+      mwb_section = document.getElementById("mobile-world-builder-section")
+      if mwb_section?
+        mwb_section.style.display = "block"
+      
+      # Initialize mobile world builder if not already done
+      if window.mobile_world_builder?
+        window.mobile_world_builder.redraw()
 
     if section == "projects" and not @app.project?
       @hide "projectview"
