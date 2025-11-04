@@ -367,19 +367,19 @@ html(lang=language)
       div#login-window
         form#guest-panel
           h2 #{translator.get("Start creating")}
-          div.button.guest-button-primary#guest-action-guest
+          div.button.guest-button-primary#guest-action-guest(onclick="if(window.app&&window.app.appui){window.app.appui.setAction('guest-action-guest',function(){window.app.createGuest();})();}else{if(window.app){window.app.createGuest();}}return false;" ontouchend="event.preventDefault();if(window.app&&window.app.appui){window.app.appui.setAction('guest-action-guest',function(){window.app.createGuest();})();}else{if(window.app){window.app.createGuest();}}")
             i.fas.fa-user-clock
             br
             h3 #{translator.get("Start as Guest")} ⭐
             p #{translator.get("Begin building immediately - no account needed!")}
 
-          div.button#guest-action-create
+          div.button#guest-action-create(onclick="if(window.app&&window.app.appui){window.app.appui.showCreateAccountPanel();}else{const panel=document.getElementById('create-account-panel');const guest=document.getElementById('guest-panel');if(panel)panel.style.display='block';if(guest)guest.style.display='none';}return false;" ontouchend="event.preventDefault();if(window.app&&window.app.appui){window.app.appui.showCreateAccountPanel();}else{const panel=document.getElementById('create-account-panel');const guest=document.getElementById('guest-panel');if(panel)panel.style.display='block';if(guest)guest.style.display='none';}")
             i.fa.fa-user-plus
             br
             h3 #{translator.get("Create Account")}
             p #{translator.get("Save projects, collaborate, and more")}
 
-          div.button#guest-action-login
+          div.button#guest-action-login(onclick="if(window.app&&window.app.appui){window.app.appui.showLoginPanel();}else{const panel=document.getElementById('login-panel');const guest=document.getElementById('guest-panel');if(panel)panel.style.display='block';if(guest)guest.style.display='none';}return false;" ontouchend="event.preventDefault();if(window.app&&window.app.appui){window.app.appui.showLoginPanel();}else{const panel=document.getElementById('login-panel');const guest=document.getElementById('guest-panel');if(panel)panel.style.display='block';if(guest)guest.style.display='none';}")
             i.fa.fa-sign-in-alt
             br
             h3 #{translator.get("Login")}
