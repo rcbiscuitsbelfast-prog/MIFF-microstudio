@@ -66,7 +66,8 @@ class @WebApp
 
     @app.get new RegExp(home_exp), (req,res)=>
       return if @ensureDevArea(req,res)
-      return @return429(req,res) if not @server.rate_limiter.accept("page_load_ip",req.ip)
+      # Temporarily disabled rate limiting to fix "too many requests" issue
+      # return @return429(req,res) if not @server.rate_limiter.accept("page_load_ip",req.ip)
 
       dev_domain = if @server.config.dev_domain then "'#{@server.config.dev_domain}'" else "location.origin"
       run_domain = if @server.config.run_domain then "'#{@server.config.run_domain}'" else "location.origin.replace('.dev','.io')"

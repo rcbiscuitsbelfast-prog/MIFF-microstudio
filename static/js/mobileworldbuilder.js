@@ -196,8 +196,8 @@ class MobileWorldBuilder {
     // Touch/mouse events
     this.setupCanvasEvents();
     
-    // Load tiles from submodules
-    this.loadTileAssets();
+    // Don't auto-load tiles - let user upload instead to avoid rate limits
+    // this.loadTileAssets();
     
     this.redraw();
     
