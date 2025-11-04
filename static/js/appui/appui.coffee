@@ -430,12 +430,18 @@ class AppUI
       # Initialize mobile world builder if not already done
       if window.mobile_world_builder?
         window.mobile_world_builder.redraw()
-      else if window.app?
-        # Try to initialize it
-        setTimeout ()=>
-          if window.MobileWorldBuilder and window.app
-            window.mobile_world_builder = new MobileWorldBuilder(window.app)
-        , 100
+      else if window.app and window.MobileWorldBuilder
+        # Try to initialize it - but only once
+        if not window.mobile_world_builder_initializing
+          window.mobile_world_builder_initializing = true
+          setTimeout ()=>
+            if window.MobileWorldBuilder and window.app and not window.mobile_world_builder
+              try
+                window.mobile_world_builder = new MobileWorldBuilder(window.app)
+              catch e
+                console.error "Failed to initialize MobileWorldBuilder:", e
+                window.mobile_world_builder_initializing = false
+          , 100
       
       return
     

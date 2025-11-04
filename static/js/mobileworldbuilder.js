@@ -217,38 +217,52 @@ class MobileWorldBuilder {
   }
 
   loadTileAssets() {
-    // Load tiles from cordon-sprites
+    // Load tiles from cordon-sprites - but only if assets haven't loaded yet
+    if (this.assets.tiles.length > 0) {
+      return; // Already loaded
+    }
+    
+    // Only load a few tiles to avoid too many requests
     const tile_files = [
-      "grass", "grass2", "cement", "gravel", "water", "train-tracks-horizontal"
+      "grass", "grass2", "cement", "gravel"
     ];
     
-    tile_files.forEach((name) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        
-        this.assets.tiles.push({
-          id: `tile_${name}`,
-          image: canvas,
-          width: img.width,
-          height: img.height,
-          type: "tile",
-          data_url: canvas.toDataURL()
-        });
-        
-        if (this.selected_tool === "tile") {
-          this.renderAssets();
-        }
-      };
-      img.onerror = () => {
-        console.warn(`Failed to load tile: ${name}`);
-      };
-      img.src = `/asset-module/cordon-sprites/sprites/tiles/${name}.png`;
+    let loaded = 0;
+    const max_concurrent = 2; // Limit concurrent requests
+    
+    tile_files.forEach((name, index) => {
+      // Stagger requests to avoid hitting rate limits
+      setTimeout(() => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          
+          this.assets.tiles.push({
+            id: `tile_${name}`,
+            image: canvas,
+            width: img.width,
+            height: img.height,
+            type: "tile",
+            data_url: canvas.toDataURL()
+          });
+          
+          loaded++;
+          if (loaded === tile_files.length && this.selected_tool === "tile") {
+            this.renderAssets();
+          }
+        };
+        img.onerror = () => {
+          console.warn(`Failed to load tile: ${name}`);
+          loaded++;
+        };
+        // Use relative path to avoid CORS issues
+        img.src = `/asset-module/cordon-sprites/sprites/tiles/${name}.png`;
+      }, index * 200); // Stagger by 200ms
     });
   }
 
