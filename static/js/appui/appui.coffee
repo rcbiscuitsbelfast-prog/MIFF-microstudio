@@ -570,7 +570,12 @@ class AppUI
 
     @setAction "guest-action-guest",()=>
       @app.createGuest()
-      document.getElementById("login-overlay").style.display = "none"
+      # Close overlay immediately - navigation will happen in app.js callback
+      setTimeout ()=>
+        overlay = document.getElementById("login-overlay")
+        if overlay?
+          overlay.style.display = "none"
+      , 100
 
     document.querySelector(".username").addEventListener "mouseup",(event)=>
       event.stopPropagation()
@@ -652,6 +657,12 @@ class AppUI
       if not @get("create-account-tos").checked
         return alert(@app.translator.get("You must accept the terms of use in order to create an account."))
       @app.createAccount @get("create_nick").value,@get("create_email").value,@get("create_password").value,@get("create-account-newsletter").checked
+      # Close overlay - navigation will happen in app.js callback
+      setTimeout ()=>
+        overlay = document.getElementById("login-overlay")
+        if overlay?
+          overlay.style.display = "none"
+      , 100
 
     @setAction "forgot-submit",()=>
       @app.sendPasswordRecovery(document.getElementById("forgot_email").value)

@@ -72,7 +72,14 @@ App = class App {
             info: msg.info
           };
           this.connected = true;
-          return this.userConnected(msg.nick);
+          this.userConnected(msg.nick);
+          // Navigate to mobile world builder after guest login
+          setTimeout(() => {
+            if (this.appui) {
+              this.appui.setMainSection("mobile-world-builder", true);
+            }
+          }, 500);
+          break;
       }
     });
   }
