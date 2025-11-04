@@ -400,24 +400,42 @@ class AppUI
     @show "guest-panel"
 
   setMainSection:(section,useraction=false)->
-    # Mobile world builder doesn't require login
+    # Mobile world builder doesn't require login - handle it first
     if section == "mobile-world-builder"
-      # Allow access without login
+      # Hide all other sections
       for s in @menuoptions
         do (s)=>
           element = document.getElementById("#{s}-section")
           menuitem = document.getElementById("menu-#{s}")
-          if s == section
-            element.style.display = "block"
-            menuitem.classList.add "selected" if menuitem?
-          else
+          if element?
             element.style.display = "none"
-            menuitem.classList.remove "selected" if menuitem?
+          if menuitem?
+            menuitem.classList.remove "selected"
       
       # Hide other project sections
-      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music"]
+      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music", "home"]
         elem = document.getElementById("#{s}-section")
         elem.style.display = "none" if elem?
+      
+      # Show mobile world builder
+      mwb_section = document.getElementById("mobile-world-builder-section")
+      if mwb_section?
+        mwb_section.style.display = "block"
+      
+      # Update menu if there's a menu item
+      mwb_menu = document.getElementById("menuitem-mobile-world-builder")
+      if mwb_menu?
+        mwb_menu.classList.add "selected"
+      
+      # Initialize mobile world builder if not already done
+      if window.mobile_world_builder?
+        window.mobile_world_builder.redraw()
+      else if window.app?
+        # Try to initialize it
+        setTimeout ()=>
+          if window.MobileWorldBuilder and window.app
+            window.mobile_world_builder = new MobileWorldBuilder(window.app)
+        , 100
       
       return
     
@@ -491,21 +509,6 @@ class AppUI
           simple_footer.style.visibility = "visible"
           simple_footer.style.opacity = "1"
     
-    # Show mobile world builder when selected
-    if section == "mobile-world-builder"
-      # Hide other project sections and home
-      for s in ["code", "sprites", "maps", "simple-world-builder", "assets", "sounds", "music", "home"]
-        elem = document.getElementById("#{s}-section")
-        elem.style.display = "none" if elem?
-      
-      # Show mobile world builder
-      mwb_section = document.getElementById("mobile-world-builder-section")
-      if mwb_section?
-        mwb_section.style.display = "block"
-      
-      # Initialize mobile world builder if not already done
-      if window.mobile_world_builder?
-        window.mobile_world_builder.redraw()
 
     if section == "projects" and not @app.project?
       @hide "projectview"
