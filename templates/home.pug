@@ -367,7 +367,7 @@ html(lang=language)
       div#login-window
         form#guest-panel
           h2 #{translator.get("Start creating")}
-          div.button.guest-button-primary#guest-action-guest(onclick="if(window.app&&window.app.appui){window.app.appui.setAction('guest-action-guest',function(){window.app.createGuest();})();}else{if(window.app){window.app.createGuest();}}return false;" ontouchend="event.preventDefault();if(window.app&&window.app.appui){window.app.appui.setAction('guest-action-guest',function(){window.app.createGuest();})();}else{if(window.app){window.app.createGuest();}}")
+          div.button.guest-button-primary#guest-action-guest(onclick="if(window.app){window.app.createGuest();}return false;" ontouchend="event.preventDefault();if(window.app){window.app.createGuest();}")
             i.fas.fa-user-clock
             br
             h3 #{translator.get("Start as Guest")} ⭐
@@ -436,7 +436,7 @@ html(lang=language)
             br
             input(type="checkbox" id="create-account-newsletter")
             label(for="create-account-newsletter") #{translator.get("Receive news (maximum once per month)")}
-          button#create-account-submit #{translator.get("Create Account")}
+          button#create-account-submit(onclick="const tos=document.getElementById('create-account-tos');if(!tos||!tos.checked){alert('You must accept the terms of use');return false;}const nick=document.getElementById('create_nick').value;const email=document.getElementById('create_email').value;const password=document.getElementById('create_password').value;const newsletter=document.getElementById('create-account-newsletter').checked;if(window.app){window.app.createAccount(nick,email,password,newsletter);}return false;" ontouchend="event.preventDefault();const tos=document.getElementById('create-account-tos');if(!tos||!tos.checked){alert('You must accept the terms of use');return false;}const nick=document.getElementById('create_nick').value;const email=document.getElementById('create_email').value;const password=document.getElementById('create_password').value;const newsletter=document.getElementById('create-account-newsletter').checked;if(window.app){window.app.createAccount(nick,email,password,newsletter);}") #{translator.get("Create Account")}
           br
           br
           p #{translator.get("Already registered?")}
