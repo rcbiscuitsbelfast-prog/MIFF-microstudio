@@ -256,7 +256,8 @@ class @WebApp
 
     # /user/project[/code/]
     @app.get /^\/[^\/\|\?\&\.]+\/[^\/\|\?\&\.]+(\/([^\/\|\?\&\.]+\/?)?)?$/,(req,res)=>
-      return @return429(req,res) if not @server.rate_limiter.accept("page_load_ip",req.ip)
+      # Bypass rate limit for development/debugging
+      # return @return429(req,res) if not @server.rate_limiter.accept("page_load_ip",req.ip)
 
       access = @getProjectAccess req,res
       if not access?
