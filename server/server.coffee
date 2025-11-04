@@ -81,10 +81,12 @@ class @Server
       if req.path == "/"
         @ban_ip.request( req.ip )
 
-      if @rate_limiter.accept("request","general") and @rate_limiter.accept("request_ip",req.ip)
-        next()
-      else
-        res.status(500).send ""
+      # Temporarily disable rate limiting to fix "too many requests" issue
+      next()
+      # if @rate_limiter.accept("request","general") and @rate_limiter.accept("request_ip",req.ip)
+      #   next()
+      # else
+      #   res.status(500).send ""
       @stats.inc("http_requests")
       @stats.unique("ip_addresses",req.ip)
       referrer = req.get("Referrer")
