@@ -100,11 +100,13 @@ this.Server = class Server {
       if (req.path === "/") {
         this.ban_ip.request(req.ip);
       }
-      if (this.rate_limiter.accept("request", "general") && this.rate_limiter.accept("request_ip", req.ip)) {
-        next();
-      } else {
-        res.status(500).send("");
-      }
+      // Temporarily disable rate limiting to fix "too many requests" issue
+      next();
+      // if (this.rate_limiter.accept("request", "general") && this.rate_limiter.accept("request_ip", req.ip)) {
+      //   next();
+      // } else {
+      //   res.status(500).send("");
+      // }
       this.stats.inc("http_requests");
       this.stats.unique("ip_addresses", req.ip);
       referrer = req.get("Referrer");
